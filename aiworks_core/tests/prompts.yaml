@@ -1,0 +1,38 @@
+# Minimal prompts file for running aiworks_core unit tests.
+# Host applications should provide their own prompts.yaml via AIWORKS_CORE_PROMPTS_FILE.
+
+memory_extraction:
+  system_message: "You extract memories."
+  prompt_template: "Extract memories from {{sessions_data}}."
+
+memory_compression:
+  system_message: "You compress memories."
+  prompt_template: "Compress to {{target_count}} memories."
+
+memory_import:
+  system_message: "You import memories."
+  prompt_template: "Import from {{imported_text}}."
+
+user_background_synthesis:
+  system_message: "You synthesise user background."
+  prompt_template: "Write background for {{profile_context}}."
+
+summarize_document:
+  system_message: "You summarise documents."
+  prompt_template: "Summarise {{document_content}}."
+
+image_tool:
+  system_message: "You generate images."
+  prompt_template: "Generate: {{description}}"
+
+help_chat:
+  system_message: "You are a helpful assistant. App manual: {manual_content}"
+  prompt_template: "{{user_message}}"
+
+quality_check:
+  system_message: "You check quality."
+  prompt_template: "Check: {{generated_output}}"
+
+deep_agent:
+  system_message: "You are a helpful AI assistant."
+  prompt_template: "{{user_message}}"

@@ -1,0 +1,7 @@
+{
+  "brand_name": "Acme Corp",
+  "tagline": "Innovation at scale",
+  "colors": ["#FF5733", "#33FF57"],
+  "logos": {
+    "primary": "<svg>...</svg>"
+}

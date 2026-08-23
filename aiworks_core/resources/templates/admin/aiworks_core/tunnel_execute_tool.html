@@ -1,0 +1,64 @@
+{% extends "admin/base.html" %}
+{% load static %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+    <form method="post" id="mainForm">
+        {% csrf_token %}
+        <input type="hidden" id="execute_flag" name="execute_flag"/>
+        <fieldset class="module aligned">
+            <div class="form-row">
+                <label for="server_id">Server:</label>
+                <select name="server_id" id="server_id" onchange="mainForm.submit()">
+                    <option value="">— select a server —</option>
+                    {% for srv in servers %}
+                        <option value="{{ srv.id }}" {% if srv.id == server_id %}selected{% endif %}>{{ srv.name }} ({{ srv.id }})</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-row">
+                <label for="tool_name">Tool:</label>
+                <select name="tool_name" id="tool_name" onchange="mainForm.submit()">
+                    <option value="">— select a tool —</option>
+                    {% for tool in tools %}
+                        <option value="{{ tool.name }}"
+                                {% if tool.name == tool_name %}selected{% endif %}>{{ tool.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-row">
+                <label>Description:</label>
+                <div id="tool_desc" style="color:#888">{{ tool_description }}</div>
+            </div>
+
+            <details>
+                <div class="form-row">
+                    <label>Parameters:</label>
+                    <pre id="tool_schema"
+                         style="white-space:pre-wrap;background:#1e1e1e;color:#d4d4d4;padding:0.5em;font-size:0.9em">{{ args_schema }}</pre>
+                </div>
+            </details>
+
+            <div class="form-row">
+                <label for="tool_args">Arguments (JSON):</label>
+                <textarea name="run_args" id="run_args" rows="8" cols="80">{{ run_args }}</textarea>
+            </div>
+
+        </fieldset>
+        <div class="submit-row">
+            <input type="submit" value="Execute" onclick="execute_flag.value = 'true'" class="default"/>
+        </div>
+    </form>
+
+    {% if error %}
+        <p style="color:red"><strong>Error:</strong> {{ error }}</p>
+    {% endif %}
+
+    <div id="result_area">
+        <details open>
+            <summary>Result</summary>
+            {{ run_result | safe }}
+        </details>
+    </div>
+{% endblock %}

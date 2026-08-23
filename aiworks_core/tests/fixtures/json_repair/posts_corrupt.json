@@ -1,0 +1,21 @@
+{
+  "posts": [
+    {
+      "title": "Introducing our 2026 Roadmap",
+      "body": "We're excited to share our vision for the coming year. Our strategic focus areas include AI-driven innovation, sustainable growth, and customer-centric design.",
+      "platform": "linkedin",
+      "image_url": "https://example.com/roadmap.jpg"
+    },
+    {
+      "title": "Behind the scenes at Acme",
+      "body": "Our team has been working tirelessly to bring you the best solutions. Here's a sneak peek at our latest project",
+      "platform": "linkedin"
+    },
+    {
+      "title": "Celebrating milestones",
+      "body": "Today marks our 10th anniversary! Thank you for being part of this journey. We couldn't have done it without your support",
+      "platform": "linkedin",
+      "image_url": "https://example.com/anniversary.jpg"
+    }
+  ]
+} THIS IS SOME RANDOM TRAILING CONTENT THAT DOES NOT BELONG

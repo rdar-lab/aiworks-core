@@ -1,0 +1,8 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "memory_import.json",
+  "title": "Memory Import Schema",
+  "description": "Schema for LLM-parsed memory entries during memory import from external AI systems.",
+  "type": "array",
+  "items": { "type": "string" }
+}

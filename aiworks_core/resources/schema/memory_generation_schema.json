@@ -1,0 +1,8 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "memory_generation.json",
+  "title": "Memory Generation Schema",
+  "description": "Schema for LLM-generated memory entries during memory generation job.",
+  "type": "array",
+  "items": { "type": "string" }
+}

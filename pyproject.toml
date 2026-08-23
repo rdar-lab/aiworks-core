@@ -1,0 +1,55 @@
+[project]
+name = "aiworks-core"
+version = "0.1.0"
+description = "Django library for AI-powered SaaS applications — LLM orchestration, executors, RAG, MCP, cold storage, and more."
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.11"
+authors = [{ name = "aiworks" }]
+classifiers = [
+    "Framework :: Django",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+
+dependencies = [
+    "Django>=5.0",
+    "djangorestframework>=3.14",
+    "psycopg2-binary>=2.9",
+    "boto3>=1.34",
+    "chromadb>=0.4",
+    "httpx>=0.25",
+    "mcp>=1.0",
+    "fastmcp>=1.0",
+    "langchain-core>=0.1",
+    "langchain-community>=0.0",
+    "langchain-chroma>=0.1",
+    "sentence-transformers>=2.2",
+    "python-jose[cryptography]>=3.3",
+    "cryptography>=41.0",
+    "llmlingua>=0.2",
+    "nltk>=3.8",
+    "pydantic>=2.0",
+    "pydantic-settings>=2.0",
+    "urllib3>=1.26",
+    "channels>=4.0",
+    "channels-redis>=4.0",
+    "daphne>=4.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-django>=4.5",
+    "ruff>=0.1",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["aiworks_core"]
+
+[tool.ruff]
+target-version = "py311"

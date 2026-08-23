@@ -1,0 +1,17 @@
+{
+  "slides": [
+    {"id": 'slide_001', "type": 'title', "text": 'Annual Review 2026'},
+    {"id": "slide_002", "type": "content", "text": "Key achievements",},
+    {"id": "slide_003", "type": "subtitle", "text": "Strategic pillars"},
+    {"id": "slide_004", "type": "content", "text": "Growth metrics"} // needs comma after
+  ],
+  "theme": {
+    "primary_color": "#1E3A5F",
+    "secondary_color": "#4A90D9",
+    "font_family": "Arial",
+    "accent_color": "#D4AF37"
+  },
+  "meta": {
+    "version": "1.0"
+  }
+}

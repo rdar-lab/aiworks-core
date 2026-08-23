@@ -1,0 +1,233 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "ppt_schema.json",
+  "title": "Presentation Schema",
+  "description": "Schema for LLM-generated PowerPoint presentation specs.",
+  "type": "object",
+  "required": ["template", "slides"],
+  "additionalProperties": false,
+
+  "definitions": {
+
+    "color_hex": {
+      "type": "string",
+      "pattern": "^#[0-9A-Fa-f]{6}$",
+      "description": "Hex color string e.g. #1a1a2e"
+    },
+
+    "color_ref": {
+      "anyOf": [
+        {
+          "type": "string",
+          "enum": ["primary", "secondary", "accent", "background", "text"],
+          "description": "Standard template palette slots"
+        },
+        {
+          "type": "string",
+          "not": { "pattern": "^#[0-9A-Fa-f]{6}$" },
+          "description": "Any additional theme color slot (e.g., tx1, bg2, accent4, hlink, folHlink, accent5, accent6)"
+        }
+      ]
+    },
+
+    "color_value": {
+      "oneOf": [
+        { "$ref": "#/definitions/color_hex" },
+        { "$ref": "#/definitions/color_ref" }
+      ]
+    },
+
+    "font_ref": {
+      "type": "string",
+      "enum": ["Arial", "Helvetica", "Times New Roman", "Courier New", "Georgia"],
+      "description": "Font name - must be one of the safe font list"
+    },
+
+    "font_spec": {
+      "type": "object",
+      "properties": {
+        "family": { "$ref": "#/definitions/font_ref" },
+        "size":   { "type": "number" },
+        "bold":   { "type": "boolean" },
+        "italic": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+
+    "align": {
+      "type": "string",
+      "enum": ["left", "center", "right"],
+      "default": "left"
+    },
+
+    "position": {
+      "type": "object",
+      "required": ["x", "y", "width", "height"],
+      "description": "Explicit positioning in inches. REQUIRED on all elements.",
+      "properties": {
+        "x":      { "type": "number" },
+        "y":      { "type": "number" },
+        "width":  { "type": "number", "minimum": 0 },
+        "height": { "type": "number", "minimum": 0 }
+      },
+      "additionalProperties": false
+    },
+
+    "slot_ref": {
+      "type": "string",
+      "enum": ["title", "body", "footer"],
+      "description": "Pre-defined slot names for organizational clarity. title=header, body=main content, footer=bottom bar. Slot is optional but helps the LLM understand slide structure."
+    },
+
+    "template": {
+      "type": "object",
+      "required": ["slide_width_inches", "slide_height_inches"],
+      "additionalProperties": false,
+      "properties": {
+        "slide_width_inches": { "type": "number", "default": 13.33 },
+        "slide_height_inches":{ "type": "number", "default": 7.5 },
+        "colors": {
+          "type": "object",
+          "additionalProperties": { "$ref": "#/definitions/color_hex" },
+          "properties": {
+            "primary":    { "$ref": "#/definitions/color_hex" },
+            "secondary":  { "$ref": "#/definitions/color_hex" },
+            "accent":     { "$ref": "#/definitions/color_hex" },
+            "background": { "$ref": "#/definitions/color_hex" },
+            "text":       { "$ref": "#/definitions/color_hex" }
+          }
+        },
+        "fonts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "heading": { "$ref": "#/definitions/font_spec" },
+            "body":    { "$ref": "#/definitions/font_spec" }
+          }
+        },
+        "table": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "header_fill":       { "$ref": "#/definitions/color_value" },
+            "header_font_color": { "$ref": "#/definitions/color_value" },
+            "cell_fill_primary": { "$ref": "#/definitions/color_value" },
+            "cell_fill_alt":     { "$ref": "#/definitions/color_value" },
+            "cell_font_color":   { "$ref": "#/definitions/color_value" },
+            "font":              { "$ref": "#/definitions/font_spec" }
+          }
+        }
+      }
+    },
+
+    "slide_type": {
+      "type": "string",
+      "enum": ["title", "section", "content", "quote", "closing"]
+    },
+
+    "table_column": {
+      "type": "object",
+      "required": ["header", "width"],
+      "properties": {
+        "header": { "type": "string" },
+        "width":  { "type": "number" }
+      },
+      "additionalProperties": false
+    },
+
+    "table_element": {
+      "type": "object",
+      "required": ["type", "position", "columns", "rows"],
+      "additionalProperties": false,
+      "properties": {
+        "type":     { "const": "table" },
+        "position": { "$ref": "#/definitions/position" },
+        "columns": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/table_column" }
+        },
+        "rows": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    },
+
+    "text_element": {
+      "type": "object",
+      "required": ["type", "position"],
+      "additionalProperties": false,
+      "properties": {
+        "type":      { "const": "text" },
+        "slot":      { "$ref": "#/definitions/slot_ref" },
+        "position":  { "$ref": "#/definitions/position" },
+        "text":      { "type": "string" },
+        "font":      { "$ref": "#/definitions/font_spec" },
+        "align":     { "$ref": "#/definitions/align" },
+        "font_color": { "$ref": "#/definitions/color_value" }
+      }
+    },
+
+    "rect_element": {
+      "type": "object",
+      "required": ["type", "position"],
+      "additionalProperties": false,
+      "properties": {
+        "type":     { "const": "rect" },
+        "slot":     { "$ref": "#/definitions/slot_ref" },
+        "position": { "$ref": "#/definitions/position" },
+        "fill":     { "$ref": "#/definitions/color_value" },
+        "stroke":   { "$ref": "#/definitions/color_value" }
+      }
+    },
+
+    "image_element": {
+      "type": "object",
+      "required": ["type", "position"],
+      "additionalProperties": false,
+      "properties": {
+        "type":          { "const": "image" },
+        "position":      { "$ref": "#/definitions/position" },
+        "image_file_name": { "type": "string" },
+        "image_data":    { "type": "string", "description": "Base64-encoded PNG bytes. Takes precedence over image_file_name and svg_data." },
+        "svg_data":      { "type": "string", "description": "Full SVG markup string. Will be rasterised to PNG before embedding." },
+        "shape_data":    { "type": "string", "description": "Raw PPTX spPr XML for custGeom shapes. Contains a:p:spPr element with a:custGeom path definition." }
+      }
+    },
+
+    "slide": {
+      "type": "object",
+      "required": ["type", "elements"],
+      "additionalProperties": false,
+      "properties": {
+        "type":     { "$ref": "#/definitions/slide_type" },
+        "title":    { "type": "string" },
+        "elements": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              { "$ref": "#/definitions/text_element" },
+              { "$ref": "#/definitions/rect_element" },
+              { "$ref": "#/definitions/image_element" },
+              { "$ref": "#/definitions/table_element" }
+            ]
+          }
+        }
+      }
+    },
+
+    "slides": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/slide" }
+    }
+
+  },
+
+  "properties": {
+    "template": { "$ref": "#/definitions/template" },
+    "slides":   { "$ref": "#/definitions/slides" }
+  }
+}

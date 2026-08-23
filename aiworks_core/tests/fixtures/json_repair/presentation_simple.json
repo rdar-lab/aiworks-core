@@ -1,0 +1,16 @@
+{
+  "slides": [
+    {"id": "slide_001", "type": "title", "text": "Welcome"},
+    {"id": "slide_002", "type": "content", "text": "Overview of our strategy"},
+    {"id": "slide_003", "type": "subtitle"}
+  ],
+  "theme": {
+    "primary_color": '#1E3A5F',
+    "secondary_color": '#4A90D9',
+    "font_family": 'Arial'
+  },
+  "meta": {
+    "version": "1.0",
+    "created": "2026-01-15"
+  }
+}

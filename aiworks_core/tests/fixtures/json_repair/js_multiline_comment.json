@@ -1,0 +1,6 @@
+{
+  "name": "Acme Corp",
+  /* This is a
+     multi-line comment */
+  "active": true
+}

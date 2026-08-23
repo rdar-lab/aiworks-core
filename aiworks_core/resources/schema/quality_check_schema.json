@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "quality_check.json",
+  "title": "Quality Check Schema",
+  "description": "Schema for LLM quality check responses in deep agent quality gates.",
+  "type": "object",
+  "required": ["is_approved", "feedback"],
+  "additionalProperties": false,
+  "properties": {
+    "is_approved": {
+      "type": "boolean",
+      "description": "Whether the agent output passed the quality check"
+    },
+    "feedback": {
+      "type": "string",
+      "description": "Human-readable feedback explaining the quality check result"
+    }
+  }
+}

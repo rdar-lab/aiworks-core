@@ -1,0 +1,8 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "memory_compression.json",
+  "title": "Memory Compression Schema",
+  "description": "Schema for LLM-compressed memory entries when user exceeds memory limit.",
+  "type": "array",
+  "items": { "type": "string" }
+}
